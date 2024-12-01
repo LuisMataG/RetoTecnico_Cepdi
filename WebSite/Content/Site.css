@@ -1,0 +1,151 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column */
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Cambiar el color del texto a morado */
+.text-morado {
+    color: purple !important;
+}
+
+/* Modal Header con fondo gris */
+.modal-header {
+    background-color: #f1f1f1; /* Gris claro */
+    border-bottom: 1px solid #ddd; /* Línea sutil debajo del header */
+    padding: 10px 20px;
+    position: relative; /* Para posicionar el botón de cierre */
+}
+
+/* Estilo del título */
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0; /* Sin margen para alinear mejor */
+}
+
+/* Estilo para el botón de cerrar */
+.btn-close {
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid #ccc; /* Borde gris claro */
+    border-radius: 50%; /* Botón circular */
+    width: 20px; /* Botón más pequeño */
+    height: 20px; /* Botón más pequeño */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: absolute; /* Asegura que el botón esté posicionado relativamente al contenedor */
+    top: 10px; /* 10px desde la parte superior */
+    right: 10px; /* 10px desde la parte derecha */
+}
+
+    /* Estilo para la 'X' en el botón */
+    .btn-close::after {
+        content: "x"; /* Caracter 'X' */
+        font-size: 14px; /* Fuente más pequeña */
+        color: #333; /* Color de la X */
+        font-weight: bold;
+    }
+
+    /* Efecto de hover en el botón */
+    .btn-close:hover {
+        background-color: #e0e0e0; /* Fondo gris claro en hover */
+        border-color: #bbb; /* Cambio en el borde */
+    }
+
+        .btn-close:hover::after {
+            color: #000; /* Cambio de color de la X */
+        }
+
+    /* Efecto de focus para accesibilidad */
+    .btn-close:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.5); /* Efecto de enfoque */
+    }
+
+/* Estilos generales para la tabla */
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Elimina los espacios entre celdas */
+    font-family: 'Arial', sans-serif; /* Fuente moderna y legible */
+}
+
+    /* Estilo para los encabezados de la tabla */
+    .table thead {
+        background-color: #4CAF50; /* Verde claro */
+        color: white; /* Texto blanco para contraste */
+        text-align: left; /* Alineación a la izquierda de los encabezados */
+    }
+
+    .table th {
+        padding: 12px 15px; /* Espaciado en las celdas del encabezado */
+        font-size: 1.1rem;
+    }
+
+    /* Estilo para las filas de la tabla */
+    .table tbody tr:nth-child(odd) {
+        background-color: #f9f9f9; /* Color suave para las filas impares */
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f1f1f1; /* Color más claro para las filas pares */
+    }
+
+    /* Efecto hover para cambiar el color al pasar el mouse sobre una fila */
+    .table tbody tr:hover {
+        background-color: #e1f5e1; /* Color verde suave para el hover */
+        cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    }
+
+    /* Estilo de las celdas */
+    .table td {
+        padding: 12px 15px; /* Espaciado en las celdas */
+        border-bottom: 1px solid #ddd; /* Línea sutil entre las filas */
+        color: #333; /* Texto oscuro para las celdas */
+    }
+
+    /* Estilo adicional para las filas que contienen acciones o botones */
+    .table tbody td:last-child {
+        text-align: center; /* Centra el contenido de la última columna */
+    }
+
+/* Estilos personalizados para el formulario de drag-and-drop */
+.drag-area {
+    border: 2px dashed #007bff;
+    padding: 50px;
+    text-align: center;
+    color: #007bff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+    .drag-area:hover {
+        background-color: #f8f9fa;
+    }
+
+    .drag-area p {
+        margin-top: 10px;
+    }
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #007bff;
+    color: white;
+    margin-top: 50px;
+}

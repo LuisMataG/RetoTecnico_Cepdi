@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Contacto - Desarrollador .NET";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .intro-section {
+            background-color: #ffffff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+            .intro-section h2 {
+                font-size: 2.5rem;
+                color: #007bff;
+            }
+
+            .intro-section p {
+                font-size: 1.2rem;
+                color: #555;
+            }
+
+        .highlight {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .tech-stack {
+            background-color: #eef2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+            .tech-stack h3 {
+                color: #007bff;
+            }
+
+            .tech-stack ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+                .tech-stack ul li {
+                    margin-bottom: 10px;
+                }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="intro-section">
+            <h2>@ViewBag.Title</h2>
+            <p>¡Bienvenido a mi proyecto de desarrollo web! En esta plataforma he implementado tecnologías avanzadas y buenas prácticas de desarrollo, con un enfoque en la seguridad, escalabilidad y facilidad de mantenimiento.</p>
+            <p>Este proyecto incluye dos componentes principales: un Web API robusto para gestionar los datos, así como generación de Token para los usuarios autenticados y un Website con un diseño interactivo que consume la API.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="container tech-stack">
+            <h3>¿Qué hace especial este proyecto?</h3>
+            <p>A continuación, se destacan las tecnologías y patrones que implementé, explicando por qué son fundamentales para el desarrollo profesional de aplicaciones modernas:</p>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h4 class="highlight">Web API</h4>
+                    <ul>
+                        <li><strong>Entity Framework:</strong> Utilizo **Entity Framework** para interactuar con la base de datos de manera eficiente y simplificada, garantizando un acceso rápido y seguro a los datos.</li>
+                        <li><strong>DTO (Data Transfer Object):</strong> La implementación de **DTO** para los modelos de medicamentos permite una correcta separación de capas y evita la sobreexposición de datos sensibles, mejorando la seguridad y el rendimiento al enviar solo la información necesaria.</li>
+                        <li><strong>Paginación en la API:</strong> Implementé **paginación** para manejar grandes volúmenes de datos en las respuestas, mejorando la experiencia del usuario y optimizando el rendimiento del servidor.</li>
+                        <li><strong>JWT (JSON Web Tokens):</strong> Utilizo **JWT** para la autenticación, lo que garantiza una solución ligera, segura y escalable para la gestión de sesiones en aplicaciones modernas.</li>
+                        <li><strong>Variables de Entorno:</strong> La **cadena de conexión** a la base de datos se almacena de manera segura en variables de entorno, lo que mejora la seguridad y permite una configuración flexible para diferentes entornos de despliegue.</li>
+                        <li><strong>Interfaces y Servicios:</strong> Implementé el patrón **Interfaz/Servicio** para separar la lógica de autenticación del controlador de usuario, siguiendo los principios de **inyección de dependencias** y garantizando un código modular y fácil de mantener.</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h4 class="highlight">Website</h4>
+                    <ul>
+                        <li><strong>MVC (Modelo-Vista-Controlador):</strong> En la parte del **Website**, utilicé el patrón **MVC** para garantizar una separación clara de las preocupaciones, facilitando el desarrollo, las pruebas y el mantenimiento del sistema.</li>
+                        <li><strong>Unity para Inyección de Dependencias:</strong> Implementé **Unity** para gestionar la **inyección de dependencias** en el Website, lo que facilita la configuración y mantenimiento del código, permitiendo un código más limpio y flexible.</li>
+                        <li><strong>JQuery para Consumo de Web Services:</strong> Utilicé **JQuery** para interactuar con el Web API, facilitando la integración y mejorando la interactividad del cliente con funcionalidades asincrónicas como el consumo de servicios REST/SOAP.</li>
+                        <li><strong>Token JWT:</strong> Utilicé **JWT (JSON Web Tokens)** para garantizar que solo personas autorizadas ingresen a la aplicación así como la seguridad al vigilar la vida del token en todas las pantallas.</li>
+                        <li><strong>Bootstrap:</strong> Utilicé **Bootstrap** para garantizar una interfaz de usuario moderna, responsiva y accesible.</li>
+                        <li>
+                            <strong>Validaciones en el modelo:</strong> Utilicé **Required**, **StringLength** y **RegularExpression** en el modelo para realizar validaciones del lado del servidor. Estas validaciones permiten garantizar que los datos ingresados sean correctos y estén dentro de los límites establecidos, como asegurar que un campo no quede vacío, que un texto no exceda una longitud específica o que un campo cumpla con un formato determinado.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="container tech-stack">
+            <h3>Patrones y buenas prácticas aplicadas</h3>
+            <p>He seguido diversas buenas prácticas y patrones de diseño que mejoran la escalabilidad, mantenibilidad y calidad del código:</p>
+            <ul>
+                <li><strong>Inyección de dependencias:</strong> Utilicé la **inyección de dependencias**, lo que permite un código más flexible, fácil de testear y mantener.</li>
+                <li><strong>Separación de responsabilidades:</strong> Siguiendo el patrón **MVC** y el principio de **separación de preocupaciones**, cada componente del sistema tiene una única responsabilidad, lo que facilita el desarrollo, las pruebas y la mantenibilidad a largo plazo.</li>
+                <li><strong>Modularidad:</strong> He diseñado el sistema de forma modular, utilizando interfaces y servicios, lo que permite una fácil ampliación y modificación del sistema sin afectar otras áreas.</li>
+                <li><strong>Patrón Repository:</strong> Implementé el patrón **Repository** para acceder a los datos de la base de datos, lo que permite una mejor organización y separación de la lógica de acceso a datos del resto de la aplicación.</li>
+                <li><strong>Seguridad:</strong> Utilicé **JWT** para gestionar la autenticación y autorización, asegurando que solo usuarios válidos tengan acceso a los recursos. Además, los datos sensibles, como la cadena de conexión, se mantienen seguros mediante el uso de variables de entorno.</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

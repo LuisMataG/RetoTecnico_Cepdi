@@ -1,0 +1,121 @@
+﻿@model WebSite.Models.Usuario
+
+@section Scripts {
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@using (Html.BeginForm("Edit", "Usuario", FormMethod.Post, new { id = "editForm", @class = "form-horizontal", @data_ajax = "true" }))
+{
+    @Html.HiddenFor(model => model.IdUsuario)
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">
+            @(Model.IdUsuario == 0 ? "Agregar Usuario" : "Editar Usuario")
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Usuario1, "Usuario")
+        @Html.TextBoxFor(model => model.Usuario1, new { @class = "form-control", id = "modalUsuario" })
+        @Html.ValidationMessageFor(model => model.Usuario1, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, "Contraseña")
+        @Html.TextBoxFor(model => model.Password, new
+        {
+            @class = "form-control",
+            id = "modalPassword",
+            type = "password",
+            value = string.IsNullOrEmpty(Model.Password) ? "NA" : Model.Password
+        })
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdPerfil, "Perfil")
+        @Html.DropDownListFor(
+            model => model.IdPerfil,
+            new SelectList(new[]
+            {
+                new { IdPerfil = 1, Perfil = "Admin" },
+                new { IdPerfil = 2, Perfil = "User" }
+            }, "IdPerfil", "Perfil"),
+            "Seleccionar Perfil",
+            new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IdPerfil, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Estatus)
+        @Html.DropDownListFor(
+            model => model.Estatus,
+            new SelectList(new[]
+            {
+                new { Estatus = 1, NombreEstatus = "Activo" },
+                new { Estatus = 0, NombreEstatus = "Inactivo" }
+            }, "Estatus", "NombreEstatus"),
+            "Seleccionar Estatus",
+            new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Estatus, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.HiddenFor(model => model.FechaCreacion)
+    </div>
+
+    <br />
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+            @(Model.IdUsuario == 0 ? "Agregar" : "Actualizar")
+        </button>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Interceptamos el envío del formulario para enviarlo por AJAX
+        $('#editForm').submit(function (event) {
+            event.preventDefault(); // Prevenir el envío tradicional del formulario
+
+            var form = $(this);
+
+            // Enviamos el formulario por AJAX
+            $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method'),
+                data: form.serialize(),
+                success: function (data) {
+                    if (data.success !== undefined) {  // Saber si se ejecutó o si hay errores de validación
+                        // Verifica si la operación fue exitosa
+                        if (data.success) {
+                            $('#editModal').modal('hide');
+                            window.location.href = data.redirectUrl;
+                        } else {
+                            // Al entrar aquí indica que es un mensaje JSON de error que enviamos desde el controlador.
+                            $('#modalContent').html(data.message);
+                            $('#editModal').modal('show');
+                        }
+                    } else {
+                        // Si no contiene 'success', probablemente sea un JSON con errores de validación
+                        $('#modalContent').html(data);
+                        $('#editModal').modal('show');  // Mantén el modal abierto
+                    }
+                },
+                error: function () {
+                    alert('Ocurrió un error inesperado');
+                }
+            });
+        });
+    });
+</script>

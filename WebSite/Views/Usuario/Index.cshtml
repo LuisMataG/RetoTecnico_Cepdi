@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebSite.Models.Usuario>
+
+@{
+    ViewBag.Title = "Usuarios";
+}
+
+<h2 class="card-title">Usuarios</h2>
+
+<p class="card-text">
+    <button type="button" class="btn btn-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar Usuario" id="addUser">
+        <img src="~/Content/Images/person-add.svg" />
+    </button>
+    <button type="button" class="btn btn-light d-none" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario" id="deleteButton">
+        <img src="~/Content/Images/trash3.svg" />
+    </button>
+</p>
+
+<table class="table" id="usuariosTable">
+    <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="selectAll" aria-label="Seleccionar todo">
+            </th>
+            <th>Nombre</th>
+            <th>Usuario</th>
+            <th>Fecha de Creación</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Aquí se llenarán las filas dinámicamente con JavaScript -->
+    </tbody>
+</table>
+<!-- Paginación -->
+<div id="pagination" class="pagination-container">
+    <!-- Los botones de paginación se generarán aquí -->
+</div>
+
+<!-- Modal para editar usuario -->
+<div class="modal fade" id="editModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div id="modalContent" class="modal-body">
+                <!-- Aquí se cargará el formulario dinámicamente -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Sitio/Usuarios/JQUsuariosIndex.js"></script>
+    <script>
+        $(document).ready(function () {
+            cargarUsuarios(1, 10, '@ViewBag.BaseUrl');
+            cambiarDePagina(10, '@ViewBag.BaseUrl');
+            var urlEditModal = '@Url.Action("EditModal", "Usuario")';
+            mostrarModalEdicion(urlEditModal);
+            agregarNuevoUsuario(urlEditModal);
+            seleccionarTodosChkBox();
+            seleccionarCheckboxIndividual();
+            clicBtnEliminar();
+        });
+    </script>
+}

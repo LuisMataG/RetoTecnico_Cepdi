@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "Contacto - Desarrollador .NET";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .contact-section {
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+            .contact-header h2 {
+                font-size: 2.5rem;
+                color: #007bff;
+            }
+
+            .contact-header p {
+                font-size: 1.1rem;
+                color: #555;
+            }
+
+        .contact-info {
+            font-size: 1.1rem;
+        }
+
+            .contact-info strong {
+                color: #007bff;
+            }
+
+        .skills {
+            background-color: #eef2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+            .skills h3 {
+                color: #007bff;
+            }
+
+            .skills ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+                .skills ul li {
+                    margin-bottom: 10px;
+                }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="contact-header">
+            <h2>@ViewBag.Title</h2>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="contact-section">
+            <h3>¿Cómo puedo ayudarte?</h3>
+            <p>¡Hola! Soy un desarrollador .NET con experiencia en diversas tecnologías de la plataforma Microsoft. Si tienes alguna pregunta, propuesta de colaboración o proyecto en mente, estaré encantado de escuchar de ti.</p>
+
+            <h4>Contacto Directo</h4>
+            <address class="contact-info">
+                <p><strong>Correo Electrónico:</strong> <a href="mailto:luismanuel.matagomez@gmail.com">luismanuel.matagomez@gmail.com</a></p>
+            </address>
+
+            <h4>Redes Sociales y Perfiles Profesionales</h4>
+            <address class="contact-info">
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/luis-manuel-mata-g%C3%B3mez-b03a30140/" target="_blank">Luis Mata</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/tuusuario" target="_blank">github.com/tuusuario</a></p>
+            </address>
+        </section>
+
+        <section class="skills">
+            <h3>Mis Habilidades Técnicas</h3>
+            <p>Trabajo con tecnologías de la plataforma .NET y herramientas relacionadas para crear aplicaciones robustas, seguras y escalables. A continuación, algunas de las tecnologías con las que tengo experiencia:</p>
+            <ul>
+                <li>ASP.NET</li>
+                <li>.NET Core</li>
+                <li>Entity Framework Core</li>
+                <li>C#</li>
+                <li>Azure</li>
+                <li>Microservicios</li>
+                <li>Base de datos SQL Server</li>
+                <li>CI/CD con GitHub Actions, Azure DevOps</li>
+                <li>API RESTful</li>
+                <li>Patrones de diseño como MVC, Repository, Singleton</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,168 @@
+﻿@model WebSite.Models.Medicamentos
+
+@section Scripts {
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+@using (Html.BeginForm("Modal", "Medicamentos", FormMethod.Post, new { id = "editForm", @class = "form-horizontal", @data_ajax = "true" }))
+{
+    @Html.HiddenFor(model => model.Idmedicamento)
+
+    <!-- Muestra los errores generales del formulario -->
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">
+            @(Model.Idmedicamento == 0 ? "Agregar Medicamento" : "Editar Medicamento")
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Concentracion, "Concentración")
+        @Html.TextBoxFor(model => model.Concentracion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Concentracion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Precio)
+        @Html.TextBoxFor(model => model.Precio, new
+    {
+        @class = "form-control",
+        type = "text"
+    })
+        @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Stock)
+        @Html.TextBoxFor(model => model.Stock, new { @class = "form-control", type = "number" })
+        @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Presentacion, "Presentación")
+        @Html.TextBoxFor(model => model.Presentacion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Presentacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Idformafarmaceutica, "Forma Farmacéutica")
+        <select id="Idformafarmaceutica" name="Idformafarmaceutica" class="form-control">
+            <option value="">Seleccione una forma farmacéutica...</option> <!-- Opción vacía por defecto -->
+        </select>
+        @Html.ValidationMessageFor(model => model.Idformafarmaceutica, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Bhabilitado, "Habilitado")
+        @Html.DropDownListFor(
+            model => model.Bhabilitado,
+            new SelectList(new[]
+            {
+                new { Bhabilitado = 1, NombreBhabilitado = "SI" },
+                new { Bhabilitado = 0, NombreBhabilitado = "NO" }
+            }, "Bhabilitado", "NombreBhabilitado"),
+            "Seleccionar",
+            new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Bhabilitado, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group" style="display:none;">
+        @Html.LabelFor(model => model.FormaFarmaceuticaNombre)
+        @Html.TextBoxFor(model => model.FormaFarmaceuticaNombre, new { @class = "form-control" })
+    </div>
+
+    <br />
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+            @(Model.Idmedicamento == 0 ? "Agregar" : "Actualizar")
+        </button>
+    </div>
+}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Interceptamos el envío del formulario para enviarlo por AJAX
+        $('#editForm').submit(function (event) {
+            event.preventDefault(); // Prevenir el envío tradicional del formulario
+
+            var form = $(this);
+
+            // Enviamos el formulario por AJAX
+            $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method'),
+                data: form.serialize(),
+                success: function (data) {
+                    if (data.success !== undefined) {  // Saber si se ejecutó o si hay errores de validación
+                        // Verifica si la operación fue exitosa
+                        if (data.success) {
+                            $('#editModal').modal('hide');
+                            window.location.href = data.redirectUrl;
+                        } else {
+                            // Al entrar aquí indica que es un mensaje JSON de error que enviamos desde el controlador.
+                            $('#modalContent').html(data.message);
+                            $('#editModal').modal('show');
+                        }
+                    } else {
+                        // Si no contiene 'success', probablemente sea un JSON con errores de validación
+                        $('#modalContent').html(data);
+                        $('#editModal').modal('show');  // Mantén el modal abierto
+                    }
+                },
+                error: function () {
+                    alert('Ocurrió un error inesperado');
+                }
+            });
+        });
+
+        var baseUrl = '@ViewBag.BaseUrl';
+        // Llamada AJAX para obtener los datos de la API
+        $.ajax({
+            url: baseUrl + 'api/Formasfarmaceuticas', // Cambia esto por la URL correcta de tu API
+            method: 'GET',
+            success: function (data) {
+                // Verifica si la respuesta tiene datos
+                if (data && Array.isArray(data)) {
+                    // Recorre los datos y agrega las opciones al select
+                    var $select = $('#Idformafarmaceutica');
+                    $select.empty(); // Limpiar el select antes de agregar nuevas opciones
+                    $select.append('<option value="">Seleccione una forma farmacéutica...</option>'); // Opción predeterminada
+
+                    // Obtener el nombre de la forma farmacéutica que viene del modelo
+                    var idSelected = '@Model.Idformafarmaceutica'; // Este es el nombre que viene en el modelo
+
+                    // Agregar cada forma farmacéutica como opción en el select
+                    $.each(data, function (index, item) {
+                        // Agregar solo los habilitados (habilitado == 1)
+                        // Crear una opción para cada forma farmacéutica
+                        var option = $('<option></option>')
+                            .val(item.idformafarmaceutica)
+                            .text(item.nombre);
+                        // Si el nombre del modelo coincide con el nombre de la forma farmacéutica, selecciona la opción
+                        if (item.idformafarmaceutica === parseInt(idSelected)) {
+                            option.attr('selected', 'selected');
+                        }
+
+                        // Agregar la opción al select
+                        $select.append(option);
+                    });
+                }
+            },
+            error: function (error) {
+                console.error('Error al cargar las formas farmacéuticas:', error);
+            }
+        });
+    });
+</script>

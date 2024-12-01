@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Error";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <hgroup>
+        <h1>Error.</h1>
+        <h2>Error al procesar su solicitud.</h2>
+    </hgroup>
+
+    <!-- Mover el div fuera de hgroup -->
+    <div>
+        <strong>Details:</strong>
+        @if (ViewData["message"] != null)
+        {
+            <p>@ViewData["message"]</p>
+        }
+        else
+        {
+            <p>Error desconocido.</p>
+        }
+    </div>
+</body>
+</html>

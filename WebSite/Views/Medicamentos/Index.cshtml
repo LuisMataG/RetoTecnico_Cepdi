@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebSite.Models.Medicamentos>
+
+@{
+    ViewBag.Title = "Medicamentos";
+}
+
+<h2 class="card-title">Medicamentos</h2>
+
+<p class="card-text">
+    <button type="button" class="btn btn-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar Medicamento" id="addMedic">
+        <img src="~/Content/Images/database-add.svg" />
+    </button>
+    <button type="button" class="btn btn-light d-none" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Medicamento" id="deleteButton">
+        <img src="~/Content/Images/trash3.svg" />
+    </button>
+</p>
+
+<table class="table" id="meciamentosTable">
+    <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="selectAll" aria-label="Seleccionar todo">
+            </th>
+            <th>Nombre</th>
+            <th>Concentración</th>
+            <th>Precio</th>
+            <th>Disponibles</th>
+            <th>Presentación</th>
+            <th>Forma</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Aquí se llenarán las filas dinámicamente con JavaScript -->
+    </tbody>
+</table>
+<!-- Paginación -->
+<div id="pagination" class="pagination-container">
+    <!-- Los botones de paginación se generarán aquí -->
+</div>
+
+<!-- Modal para editar usuario -->
+<div class="modal fade" id="editModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div id="modalContent" class="modal-body">
+                <!-- Aquí se cargará el formulario dinámicamente -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Sitio/Medicamentos/JQMedicamentosIndex.js"></script>
+    <script>
+        $(document).ready(function () {
+            cargarMedicamentos(1, 10, '@ViewBag.BaseUrl');
+            cambiarDePagina(10, '@ViewBag.BaseUrl');
+            var urlEditModal = '@Url.Action("ShowModal", "Medicamentos")';
+            mostrarModalEdicion(urlEditModal);
+            agregarNuevoMedicamento(urlEditModal);
+            seleccionarTodosChkBox();
+            seleccionarCheckboxIndividual();
+            clicBtnEliminar();
+        });
+    </script>
+}

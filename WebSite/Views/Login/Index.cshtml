@@ -1,0 +1,164 @@
+﻿@model WebSite.Models.Login
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Iniciar sesión</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/bootstrap-icons.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center mb-4">
+                    <!-- Logo -->
+                    <img src="~/Content/Images/Cepdi.png" alt="Logo" class="img-fluid" style="max-width: 150px; height: auto;">
+                </div>
+
+                <!-- Formulario de Login -->
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title text-center mb-4">Iniciar sesión</h5>
+                        <center>
+                            @Html.AntiForgeryToken()
+
+                            <!-- Campo para el nombre de usuario -->
+                            <div class="mb-3 d-flex align-items-center">
+                                <img src="~/Content/Images/person.svg" alt="Usuario" class="ms-2" style="width: 20px; height: 20px;" />
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nombre de usuario", id = "username" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+
+                            <!-- Campo para la contraseña -->
+                            <div class="mb-3 d-flex align-items-center">
+                                <img src="~/Content/Images/lock.svg" alt="Usuario" class="ms-2" style="width: 20px; height: 20px;" />
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Contraseña", id = "password" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            <div>
+                                <!-- Botón de inicio de sesión -->
+                                <button type="submit" class="btn btn-dark btn-sm" id="loginBtn">Iniciar sesión</button>
+                            </div>
+                        </center>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <!-- Contenedor para mensajes de error -->
+        <div id="errorMessagesContainer"></div>
+    </div>
+
+    <!-- Validar formulario -->
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+
+    <script>
+        $("#loginBtn").click(function (event) {
+            event.preventDefault(); // Evita el comportamiento por defecto del botón
+
+            // Obtener los valores de los campos de usuario y contraseña
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var baseUrl = '@ViewBag.BaseUrl';
+
+            if (username === "" || password === "") {
+                showError("Por favor ingrese su usuario y contraseña.");
+                return;
+            }
+
+            // Realizar la solicitud AJAX para obtener el token
+            $.ajax({
+                url: baseUrl + 'api/Auth',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ username: username, password: password }),
+                success: function (response) {
+                    // Revisamos si el objeto contiene un token
+                    if (response.token) {
+                        // Si la respuesta contiene el token, guardarlo en localStorage
+                        sessionStorage.setItem('authToken', response.token);
+                        console.log(sessionStorage.getItem('authToken'));
+                        // Redirigir al usuario a la página de inicio
+                        window.location.href = '/home'; // Redirigir al usuario a la página de inicio (ajustar según tu lógica)
+                    }
+                    // Si el API retorna un mensaje de error
+                    else if (response.message) {
+                        // Muestra el mensaje de error en el contenedor
+                        showError(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    // Intentar parsear la respuesta JSON del error, si está disponible
+                    try
+                    {
+                        var errorResponse = JSON.parse(xhr.responseText); // Intenta parsear la respuesta del servidor
+                        if (errorResponse && errorResponse.message) {
+                            // Si contiene el campo 'message', muestra el mensaje de error
+                            showError(errorResponse.message);
+                        } else {
+                            // Si no contiene 'message', mostrar un mensaje genérico
+                            showError("Ocurrió un error. Inténtalo de nuevo.");
+                        }
+                    } catch (e)
+                    {
+                        // Si la respuesta no es JSON o no se puede parsear, mostrar el texto crudo
+                        showError("Ocurrió un error inesperado: " + xhr.responseText);
+                    }
+                }
+            });
+        });
+
+        // Función para mostrar el mensaje de error y agregarlo al contenedor
+        function showError(message) {
+            // Crear un nuevo contenedor de alerta
+            var alertDiv = $('<div>', {
+                class: 'alert alert-warning alert-dismissible fade show',
+                role: 'alert',
+                html: '<strong>Error:</strong> ' + message +
+                      '<button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">' +
+                      '<span aria-hidden="true">&times;</span>' +
+                      '</button>'
+            });
+
+            // Añadir el nuevo mensaje al contenedor de errores
+            $('#errorMessagesContainer').append(alertDiv);
+        }
+    </script>
+    <script src="~/Scripts/JWT/ValidarToken.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            validateToken();
+        });
+    </script>
+</body>
+</html>

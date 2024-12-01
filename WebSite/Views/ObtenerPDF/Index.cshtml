@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebSite.Models.ObtenerPDF>
+@{
+    ViewBag.Title = "Obtener PDF";
+}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Cargar archivo XML</h2>
+    <form action="#" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="xmlFile">Archivo XML:</label>
+            <div id="drag-area" class="drag-area">
+                <p>Arrastra y suelta tu archivo XML aquí</p>
+                <input type="file" id="xmlFile" name="xmlFile" accept=".xml" style="display: none;">
+            </div>
+            <small id="fileHelp" class="form-text text-muted">Solo archivos XML son permitidos.</small>
+        </div>
+        <center>
+            <div class="form-group mt-3">
+                <button id="uploadButton" type="button" class="btn btn-primary">Subir Archivo</button>
+            </div>
+        </center>
+    </form>
+    <p><span id="uuid" style="display: none;"></span></p>
+</div>
+
+<script src="~/Scripts/Sitio/ObtenerPDF/SOAPService.js"></script>
+<script src="~/Scripts/Sitio/ObtenerPDF/ObtenerPDF.js"></script>
+<script>
+    $(document).ready(function () {
+        //Configurar drag and drop
+        configurarDragAndDrop('#drag-area', '#xmlFile');
+
+        // Procesar el archivo cuando el usuario haga clic en el botón de subir
+        $('#uploadButton').on('click', function () {
+            updateFileName('#xmlFile', '#drag-area', '#uuid', '@ViewBag.WSUrl');
+        });
+
+    });
+</script>
