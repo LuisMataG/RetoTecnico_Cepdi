@@ -44,7 +44,7 @@ Este proyecto requiere una variable de entorno global para almacenar la cadena d
    - Abre una nueva ventana de **Símbolo del sistema** y escribe:
 
      ```bash
-     echo %MI_VARIABLE%
+     echo %MY_CONNECTION_STRING%
      ```
 
    - Si todo está bien configurado, deberías ver la cadena de conexión que ingresaste.
