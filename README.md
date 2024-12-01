@@ -13,7 +13,7 @@ Antes de comenzar, asegúrate de tener los siguientes requisitos instalados en t
 
 - **JavaScript**
 - **.NET Core 9**
-- - **.NET 4.7.2**
+- **.NET 4.7.2**
 - **Base de datos SQL SERVER 2019**
 
 ## Configuración de la Base de Datos
